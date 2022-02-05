@@ -1,0 +1,16 @@
+Props vs State
+
+As a recap, here is a summary of the main differences between props and state:
+
+- We use props to pass data to components.
+- Components use state to manage their data.
+- Props are read-only and cannot be modified.
+- State can be modified by its component using the setState() method.
+- The setState() method results in re-rendering the component affected.
+
+Components that have state are called stateful, while components that do not use state are called stateless.
+
+
+
+
+
