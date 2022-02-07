@@ -210,6 +210,153 @@ const counterApp3 = <CounterLmc />;
 
 
 
+//Converter App (Km to Miles)
+function Converter() {
+  const [km, setKm] = useState(0);
+
+  //The handleChange function updates the state with the current value of the textfield, causing the component to re-render and show the corresponding miles value, which is calculated using the convert function.
+  function handleChange(e) {
+    setKm(e.target.value);
+  }
+  function convert(km) {
+    //Calculates the miles value upon input:
+    return (km/1.609).toFixed(2) + " miles";
+  }
+
+  return <div>
+  <input type="text" value={km}
+  //calling the handle change function when its value changes
+  onChange={handleChange} />
+  <p> {km} km is {convert(km)} </p>
+  </div>;
+}
+
+const converterApp = <Converter />;
+
+
+
+//Form App
+function AddForm() {
+  const [sum, setSum] = useState(0);
+  const [num, setNum] = useState(0);
+
+  function handleChange(e) {
+    setNum(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    setSum(sum + Number(num));
+    //The "e.preventDefault();" statement prevents the default behavior of the form, which, by default, reloads the page when submitted. In JavaScript we would use "return false;" for that, but in React we need to call preventDefault().
+    e.preventDefault();
+  }
+
+  return <form onSubmit={handleSubmit}>
+    {/*The value of the input is controlled by React (we keep the value in the state). An input form element whose value is controlled by React in this way is called a "controlled component".*/}
+    <input type="number" value={num} onChange={handleChange} />
+    {/*When the form is submitted using the submit button, the handleSubmit function gets called, which updates the value of sum in the state.*/}
+    <input type="submit" value="Add" />
+    <p> Sum is {sum} </p>
+  </form>;
+}
+
+const formState = <AddForm />;
+
+
+
+//Rendering A List (Keys)
+//Considering an array of strings "const arr = ["A", "B", "C"];", the program below represents how to render a list <li> element for each item in the array, defining a MyList component and passing it to the array as a prop using a custom data attribute: "<MyList data={arr} />"
+//The function MyList() is called a component logic
+function MyList(props) {
+  const arr = props.data;
+  const listItems = arr.map((val, index) =>
+    //Keys are important, because they uniquely identify elements, helping React understand which items have changed, are added, or are removed. Usually, these are IDs from your data, or can be auto-generated indexes.
+    <li key={index}>{val}</li>
+  );
+  return <ul>{listItems}</ul>;
+}
+
+const arr = ["A", "B", "C"];
+const listKey = <MyList data={arr} />;
+/*We take the input array from the incoming props, loop through the array using the JavaScript map function and return a <li> element for each item.
+The resulted array is stored in the listItems variable.
+Then, the component returns the listItems array inside a <ul> tag.*/
+
+
+
+//Contact Manager App
+//By taking a quick glance at this app, it makes sense to have two components; AddPersonForm and PeopleList.
+//AddPersonForm: a form with the text field and Add button which uses state to manage the value of the text field:
+function AddPersonForm(props) {
+  const [ person, setPerson ] = useState('');
+    
+  function handleChange(e) {
+    setPerson(e.target.value);
+  }
+  
+  /*Similar to passing the contacts list to our PeopleList component, we passed down the addPerson() function to our AddPersonForm using a prop called handleSubmit.
+  Now, our PeopleList can call the handleSubmit function that it received when the form is submitted, to add a new person to the list:*/
+  function handleSubmit(e) {
+    if(person !== '') {
+      props.handleSubmit(person);
+      //We also clear the value of the text field using setPerson('') after adding a new person.
+      setPerson('');
+    }
+    e.preventDefault();
+  }
+  /*The code above shows how to call the function "addPerson(name)" from our child AddPersonForm component, where the data for the new person is stored?
+  Just like we passed down data using props, React allows us to pass down function references!*/
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" 
+        placeholder="Add new contact" 
+        onChange={handleChange} 
+        value={person} />
+      <button type="submit">Add</button>
+    </form>
+  );
+}
+
+//PeopleList received an array representing the contacts and renders a list on the page:
+function PeopleList(props) {
+  const arr = props.data;
+  const listItems = arr.map((val, index) =>
+  //Note that we accessed our styling with the id attribute so as to make the styling peculiar to the contact manager app.
+    <li key={index} id="li">{val}</li>
+  );
+  return <ul id="ul">{listItems}</ul>;
+}
+
+
+//Sharing State
+/*Right now, our AddPersonForm independently keeps its state. How can we add a new contact to our PeopleList then, when the form is submitted?
+To accomplish that, we need to share the state between the components. We can do that by lifting the state up to a parent component. This means that the parent component will hold the data that needs to be shared between the components. In our case, that is the contacts list.
+Let's create a parent component called ContactManager, which includes the AddPersonForm and PeopleList as child components and holds the contacts list in its state:*/
+function ContactManager(props) {
+  const [contacts, setContacts] = useState(props.data);
+  /*The ContactManager component receives the initial contacts list using props, saves it in its state.
+  Then it passes down the contacts list to its child component.
+  Data can be passed from the parent to the child, but not from the child to the parent. React uses what is called unidirectional data flow, in other words, data only flows downward, so to speak.*/
+
+  //Here, we created an addPerson() function to our ContactManager component to add a new person to our contacts state array:
+  function addPerson(name) {
+    setContacts([...contacts, name]);
+  }
+  /*But how are we going */
+
+  return (
+    <div>
+      <AddPersonForm handleSubmit={addPerson} />
+      <PeopleList data={contacts} />
+    </div>
+  );
+}
+/*The ContactManager component receives the initial contacts list using props, saves it in its state.
+Then it passes down the contacts list to its child component.
+Data can be passed from the parent to the child, but not from the child to the parent. React uses what is called unidirectional data flow, in other words, data only flows downward, so to speak.*/
+const contacts = ["James Smith", "Thomas Anderson", "Bruce Wayne"];
+
+
 
 
 
@@ -219,7 +366,8 @@ const counterApp3 = <CounterLmc />;
 
 ReactDOM.render(
   /*When you call the render method, any existing content of the container gets replaced. That is why, usually, the containers are empty in the HTML.*/
-  <p>{classC} {functionC} {functionP} {classP} {classS} {propApp} {counterApp} {counterApp1} {counterApp2} {counterApp3}</p>,
+  <p>{classC} {functionC} {functionP} {classP} {classS} {propApp} {counterApp} {counterApp1} {counterApp2} {counterApp3} <br /> <br /> {converterApp} <br /> {formState}{listKey} <ContactManager data={contacts} /></p>,
+  
   document.getElementById('root')
 );
 

@@ -1,3 +1,19 @@
+React is one of the most popular JavaScript libraries for front-end web applications.
+
+Here are some of the advantages of React:
+
+Speed
+Interactive websites need to update the DOM (Document Object Model) each time a change happens. This process is generally resourceful and slow.
+Compared to other libraries that manipulate the DOM, React uses a Virtual DOM, allowing to update only the parts of the website that have changed. This increases the speed of updates dramatically, as modern web applications may contain thousands of elements.
+
+Ease of Use
+React allows developers to group related code together, thereby making building and maintaining large scale applications much less complex.
+
+Support
+React has an amazingly large community and is open source. It is maintained by Facebook and the community.
+
+
+
 Props vs State
 
 As a recap, here is a summary of the main differences between props and state:
@@ -14,3 +30,11 @@ Components that have state are called stateful, while components that do not use
 
 
 
+
+Summary of our Contact Manager App
+An important takeaway from this lesson is that props can be used to pass down not only state, but also functions, that may manipulate the state.
+This way, we are able to store the application state in the parent and allow its child components to use and manipulate the state.
+Now, when our app is fully functional, we can add some CSS styles and a check, to prevent creation of blank contacts.
+
+Explore the project, try to modify the code and add attributes to our contacts, such as age, location, phone number.
+Customize your contacts list and share your creation in the comments below!
