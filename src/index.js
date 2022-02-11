@@ -1,77 +1,33 @@
-//import React from 'react';
+//import React from 'react'; //The general way of importing React without hooks for functional components.
 /*React provides a special Hook called useEffect to make lifecycle methods available in functional components. It combines the componentDidMount, componentDidUpdate, and componentWillUnmount methods into one.
 In order to use state inside of functional components, we will firstly need to import the useState hook:*/
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
+//import App from './App'; // We commented this line because "App" was not used
 import reportWebVitals from './reportWebVitals';
 
 
+
+
+
+//Class components
+//A simple class components
 class Hello1 extends React.Component {
   render() {
     return <h1>Hello world.</h1>;
   }
 }
 
-const classC = <Hello1 />
 
-//Props can be accessed in class components using this.props.
+
+//Props can be accessed in class components using "this.props".
 class Hello2 extends React.Component {
   render() {
     return <p>Hello, {this.props.name}!</p>;
   }
 }
 
-const classP = <Hello2 name="Mary" />;
-
-
-/*The code below defined a functional component called Hi that returns a simple React element.
-We can use our user-defined element and render it on the page:
-Remember, all component names must start with capital letters*/
-function Hello3() {
-  return <h2>Hi world.</h2>;
-}
-
-const functionC = <Hello3 />;
-
-function Hello4(props) {
-  return <p>Hello, {props.name}!</p>;
-}
-
-/*Here, our App component uses the Hello component three times, each times with a new name attribute.*/
-function App1() {
-  return <div>
-    <Hello4 name="David" />
-    <Hello4 name="James" />
-    <Hello4 name="Amy" />
-  </div>;
-}
-/*Generally, it is a good practice to split complex components into multiple smaller components, that are reusable.
-For example, a Post component can use an Avatar component, an Image component, a Date component, etc.*/
-const functionP = <App1 />;
-
-
-//Let's create a shopping list.
-function Item(props) {
-  //The Item component will render a simple div element with the data:
-  return <div className="item">
-  <b>Name:</b> {props.name} <br />
-  <b>Price:</b> ${props.price}
-  </div>;
-}
-
-//Now we can use our component and create multiple items for our shopping list:
-function App2() {
-  return <div>
-    {/*Each item in our list will have a name and a price.*/}
-    <Item name="Cheese" price="4.99" />
-    <Item name="Bread" price="1.5" />
-    <Item name="Ice cream" price="24" />
-  </div>;
-}
-
-const propApp = <App2 />;
 
 
 /*Many web apps need their components to change their data, for example, after user interaction (clicking a button, submitting a form, etc.).
@@ -88,8 +44,6 @@ class Hello5 extends React.Component {
     return <h3>Hello {this.state.name}.</h3>;    
   }
 }
-
-const classS = <Hello5 />;
 
 
 
@@ -118,7 +72,88 @@ class CounterC extends React.Component {
     </div>;
   }
 }
-const counterApp = <CounterC />;
+
+
+
+/*Mounting is the process when a component is rendered on the page.
+Unmounting is the process when a component is removed from the page.*/
+class CounterLmc extends React.Component {
+  state = {
+    counterLmc: 0
+  }
+  decrement = () => {
+    this.setState({counterLmc: this.state.counterLmc-1});
+  }
+  //componentDidMount is typically used for populating the state inside of a component when it initially mounts to the DOM. We can also use componentDidMount in a Counter app to set the initial value of the counter:
+  componentDidMount() {
+    this.setState({counterLmc: 1});
+  }
+  //This will set an initial value of the counter when the component is rendered. Similarly, the componentWillUnmount() lifecycle method is called right before the component is removed from the DOM. It can be used to free up resources taken by the component.
+
+  //componentDidUpdate() is only called when the component is updated.
+  componentDidUpdate() {
+    alert("Number of clicks: " + this.state.counterLmc);
+  }
+  //This will set an initial value of the counter when the component is rendered.
+  render() {
+    //The componentDidMount method is called when a component is rendered on the page.
+    return <div>
+      <br/>
+      <p>{this.state.counterLmc}</p>
+      <button onClick={this.decrement}>Decrement</button>
+    </div>;
+  }
+}
+
+
+
+
+//Function components
+/*The code below defined a functional component called Hi that returns a simple React element.
+We can use our user-defined element and render it on the page:
+Remember, all component names must start with capital letters*/
+function Hello3() {
+  return <h2>Hi world.</h2>;
+}
+
+
+
+function Hello4(props) {
+  return <p>Hello, {props.name}!</p>;
+}
+
+/*Here, our App component uses the Hello component three times, each times with a new name attribute.*/
+function App1() {
+  return <div>
+    <Hello4 name="David" />
+    <Hello4 name="James" />
+    <Hello4 name="Amy" />
+  </div>;
+}
+/*Generally, it is a good practice to split complex components into multiple smaller components, that are reusable.
+For example, a Post component can use an Avatar component, an Image component, a Date component, etc.*/
+
+
+
+//Let's create a shopping list.
+function Item(props) {
+  //The Item component will render a simple div element with the data:
+  return <div className="item">
+  <b>Name:</b> {props.name} <br />
+  <b>Price:</b> ${props.price}
+  </div>;
+}
+
+//Now we can use our component and create multiple items for our shopping list:
+function App2() {
+  return <div>
+    {/*Each item in our list will have a name and a price.*/}
+    <Item name="Cheese" price="4.99" />
+    <Item name="Bread" price="1.5" />
+    <Item name="Ice cream" price="24" />
+  </div>;
+}
+
 
 
 //We can also achieve the counter app with the functional components
@@ -139,7 +174,7 @@ function CounterF() {
   <button onClick={decrement}>Decrement</button>
   </div>;
 }
-const counterApp1 = <CounterF />;
+
 
 
 //Lifecycle Methods
@@ -174,40 +209,6 @@ function CounterLmf() {
   </div>;
 }
 
-const counterApp2 = <CounterLmf />;
-
-/*Mounting is the process when a component is rendered on the page.
-Unmounting is the process when a component is removed from the page.*/
-class CounterLmc extends React.Component {
-  state = {
-    counterLmc: 0
-  }
-  decrement = () => {
-    this.setState({counterLmc: this.state.counterLmc-1});
-  }
-  //componentDidMount is typically used for populating the state inside of a component when it initially mounts to the DOM. We can also use componentDidMount in a Counter app to set the initial value of the counter:
-  componentDidMount() {
-    this.setState({counterLmc: 1});
-  }
-  //This will set an initial value of the counter when the component is rendered. Similarly, the componentWillUnmount() lifecycle method is called right before the component is removed from the DOM. It can be used to free up resources taken by the component.
-
-  //componentDidUpdate() is only called when the component is updated.
-  componentDidUpdate() {
-    alert("Number of clicks: " + this.state.counterLmc);
-  }
-
-  //This will set an initial value of the counter when the component is rendered.
-  render() {
-    //The componentDidMount method is called when a component is rendered on the page.
-    return <div>
-      <br/>
-      <p>{this.state.counterLmc}</p>
-      <button onClick={this.decrement}>Decrement</button>
-    </div>;
-  }
-}
-const counterApp3 = <CounterLmc />;
-
 
 
 //Converter App (Km to Miles)
@@ -230,8 +231,6 @@ function Converter() {
   <p> {km} km is {convert(km)} </p>
   </div>;
 }
-
-const converterApp = <Converter />;
 
 
 
@@ -259,8 +258,6 @@ function AddForm() {
   </form>;
 }
 
-const formState = <AddForm />;
-
 
 
 //Rendering A List (Keys)
@@ -276,10 +273,26 @@ function MyList(props) {
 }
 
 const arr = ["A", "B", "C"];
-const listKey = <MyList data={arr} />;
 /*We take the input array from the incoming props, loop through the array using the JavaScript map function and return a <li> element for each item.
 The resulted array is stored in the listItems variable.
 Then, the component returns the listItems array inside a <ul> tag.*/
+
+
+
+//
+const classC = <Hello1 />
+const classP = <Hello2 name="Mary" />;
+const functionC = <Hello3 />;
+const functionP = <App1 />;
+const propApp = <App2 />;
+const classS = <Hello5 />;
+const counterApp = <CounterC />;
+const counterApp1 = <CounterF />;
+const counterApp2 = <CounterLmc />;
+const counterApp3 = <CounterLmf />;
+const formState = <AddForm />;
+const listKey = <MyList data={arr} />;
+const converterApp = <Converter />;
 
 
 
@@ -360,13 +373,11 @@ const contacts = ["James Smith", "Thomas Anderson", "Bruce Wayne"];
 
 
 
-
-
 /*The code calls React's render method, and passes it two arguments, a JSX element and a container. The render method displays the provided element in the container which, in our case, is the HTML element with id="root".*/
 
 ReactDOM.render(
   /*When you call the render method, any existing content of the container gets replaced. That is why, usually, the containers are empty in the HTML.*/
-  <p>{classC} {functionC} {functionP} {classP} {classS} {propApp} {counterApp} {counterApp1} {counterApp2} {counterApp3} <br /> <br /> {converterApp} <br /> {formState}{listKey} <ContactManager data={contacts} /></p>,
+  <p>{classC} {functionC} {functionP} {classP} {classS} {propApp} {counterApp} {counterApp1} {counterApp2} {counterApp3} <br /> {formState} {listKey} <br /> <br /> <h2>Converter App</h2>{converterApp} <br /> <br /> <h1>Contact Manager App</h1> <ContactManager data={contacts} /></p>,
   
   document.getElementById('root')
 );
