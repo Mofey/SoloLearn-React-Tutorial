@@ -109,7 +109,7 @@ class CounterLmc extends React.Component {
 
 
 //Function components
-/*The code below defined a functional component called Hi that returns a simple React element.
+/*The code below defined a functional component called Hello3 that returns a simple React element.
 We can use our user-defined element and render it on the page:
 Remember, all component names must start with capital letters*/
 function Hello3() {
@@ -122,7 +122,7 @@ function Hello4(props) {
   return <p>Hello, {props.name}!</p>;
 }
 
-/*Here, our App component uses the Hello component three times, each times with a new name attribute.*/
+/*Here, our App component uses the Hello4 component three times, each times with a new name attribute.*/
 function App1() {
   return <div>
     <Hello4 name="David" />
@@ -221,15 +221,15 @@ function Converter() {
   }
   function convert(km) {
     //Calculates the miles value upon input:
-    return (km/1.609).toFixed(2) + " miles";
+    return (km/1.609).toFixed(2) + " miles"; 
   }
 
-  return <div>
-  <input type="text" value={km}
-  //calling the handle change function when its value changes
-  onChange={handleChange} />
-  <p> {km} km is {convert(km)} </p>
-  </div>;
+    return <div>
+      <input type="text" value={km}
+      //calls the handleChange function when its value changes
+      onChange={handleChange} />
+      <p> {km} km is {convert(km)} </p>
+    </div>
 }
 
 
