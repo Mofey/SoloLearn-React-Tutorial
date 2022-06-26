@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+//import App from './App';
+import ReactApp from './ReactApp';
 import reportWebVitals from './reportWebVitals';
+
+
+/*React handles the rendering using the virtual DOM
+A virtual DOM is a programming concept where a virtual representation of a UI is kept in memory and synced with the browser DOM by ReactDOM.
+The ReactDOM.render() function renders the JSX with the id="root".
+The "root" marks the spot where we want to display our entire application*/
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <ReactApp />
   </React.StrictMode>
 );
 
